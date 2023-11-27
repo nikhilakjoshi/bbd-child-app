@@ -1,10 +1,23 @@
 import Head from "next/head";
 import clsx from "clsx";
 import { Rubik } from "next/font/google";
+import type { GetServerSidePropsContext } from "next";
 
 const font = Rubik({
   subsets: ["latin-ext"],
 });
+
+export const getServerSideProps = (ctx: GetServerSidePropsContext) => {
+  const { res } = ctx;
+  const token = new Date().getTime().toString(36);
+  res.setHeader(
+    "set-cookie",
+    `token=${token}; domain=.bluebuckdesigns.xyz; httpOnly; secure;`,
+  );
+  return {
+    props: {},
+  };
+};
 
 export default function Home() {
   return (
